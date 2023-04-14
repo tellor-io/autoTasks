@@ -13,6 +13,7 @@ exports.handler = async function (payload) {
     const maticId = '0x40aa71e5205fdc7bdb7d65f7ae41daca3820c5d3a8f62357a99eda3aa27244a3';
     const solId = '0xb211d6f1abbd5bb431618547402a92250b765151acbe749e7f9c26dc19e5dd9a';
     const dotId = '0x8810ffb0cfcb6131da29ed4b229f252d6bac6fc98fc4a61ffbde5b48131e0228';
+    const filId = '0x48e9e2c732ba278de6ac88a3a57a5c5ba13d3d8370e709b3b98333a57876ca95';
     const mimIndexId = '0x486e2149f25d46bb39a27f5e0c81be9b6f193abf46c0d49314b8d1dd104cd53b';
     const mimMashupSandId = '0x0c70e0b36b9849038027617c0e2ef87ac8c3f0e68168faf5186e0981b6c5eb47';
     const mimMashupApeId = '0x9026839f0ed5b30c73fd0a6046e3ade4e04c94c5e8c982089205109de74b0553';
@@ -48,6 +49,8 @@ exports.handler = async function (payload) {
       label = 'SOL / USD';    
     } else if (queryId === dotId) {
       label = 'DOT / USD';
+    } else if (queryId === filId) {
+      label = 'FIL / USD';
     } else if (queryId === mimIndexId) {
       label = 'Mimicry NFT Index';
     } else if (queryId === mimMashupSandId) {
