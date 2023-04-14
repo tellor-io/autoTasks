@@ -20,9 +20,9 @@ exports.handler = async function (payload) {
     let timeStamp = evt.timestamp; 
     let queryId = evt.matchReasons[0].args[0];
     let value = (Math.round((parseInt(evt.matchReasons[0].args[1], 16) / 1e18) * 100 ) / 100).toFixed(2);
- 	  let label;
+    let label;
     
-	  //decoded queryData
+    //decoded queryData
     let hexString = evt.matchReasons[0].args[3]; // each transaction's query data
     hexString = hexString.replace(/04/g, ''); // remove special characters in data
     hexString = hexString.replace(/08/g, '');
