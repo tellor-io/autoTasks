@@ -1,5 +1,8 @@
 # autoTasks 
 
+## Overview 
+This project makes OpenZeppelin defender sentinels send more concise and readable messages through an autotask. 
+
 ## Create a new label 
 All ```queryData``` will get decoded before being pushed, but creating a ```label``` through the ```queryId``` makes the final discord message look nicer. 
   
