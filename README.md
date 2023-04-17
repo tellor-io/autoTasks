@@ -3,7 +3,7 @@
 ## Overview 
 This project makes OpenZeppelin defender sentinels send more concise and readable messages through an autotask. 
 
-## Create a new label 
+## Create a new label in autotask.js
 All ```queryData``` will get decoded before being pushed, but creating a ```label``` through the ```queryId``` makes the outputted message look nicer. 
   
   
