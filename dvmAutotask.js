@@ -38,73 +38,73 @@ const axios = require('axios');
     let price;
     
     if (queryId === btcId) {
-      	label = 'BTC / USD';
-      	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+    	label = 'BTC / USD';
+    	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.bitcoin.usd;
+    	  price = response.data.bitcoin.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === ethId) {
-      	label = 'ETH / USD';
-     	 await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+      label = 'ETH / USD';
+     	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.ethereum.usd;
+    	  price = response.data.ethereum.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === trbId) {
-      	label = 'TRB / USD';
-      	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=tellor&vs_currencies=usd')
+      label = 'TRB / USD';
+      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=tellor&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.tellor.usd;
+    	  price = response.data.tellor.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === ltcId) {
     	label = 'LTC / USD';
      	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.litecoin.usd;
+    	  price = response.data.litecoin.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === opId) {
-      	label = 'OP / USD';
+      label = 'OP / USD';
     	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=optimism&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.optimism.usd;
+    	  price = response.data.optimism.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === bchId) {
      	label = 'BCH / USD';
      	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&vs_currencies=usd')
     	.then(response => {
-    		price = response.data["bitcoin-cash"]["usd"];
+    	  price = response.data["bitcoin-cash"]["usd"];
   		})
   		.catch(error => console.error(error));
     } else if (queryId === maticId) {
-      	label = 'MATIC / USD';
-      	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd')
+      label = 'MATIC / USD';
+      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd')
     	.then(response => {
-    		price = response.data["matic-network"]["usd"];
+        price = response.data["matic-network"]["usd"];
   		})
   		.catch(error => console.error(error));
     } else if (queryId === solId) {
-      	label = 'SOL / USD';
-       	await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')
+      label = 'SOL / USD';
+      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.solana.usd;
+    	  price = response.data.solana.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === dotId) {
-      	label = 'DOT / USD';
-        await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=polkadot&vs_currencies=usd')
+      label = 'DOT / USD';
+      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=polkadot&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.polkadot.usd;
+    	  price = response.data.polkadot.usd;
   		})
   		.catch(error => console.error(error));
     } else if (queryId === filId) {
-      	label = 'FIL / USD';
-        await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd')
+      label = 'FIL / USD';
+      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd')
     	.then(response => {
-    		price = response.data.filecoin.usd;
+    	  price = response.data.filecoin.usd;
   		})
   		.catch(error => console.error(error)); 
     } /* else if (queryId === mimIndexId) {
@@ -127,12 +127,11 @@ const axios = require('axios');
     	matches.push({
           hash: evt.hash, // needs to be here to connect with sentinel
       		metadata: {
-              	label: label,
+            label: label,
         		price: price,
-             	value: value,
-              	percentDiff: percentDiff,
+            value: value,
+            percentDiff: percentDiff,
         		timestamp: timestamp,
-        		
       		},
     	});
     }
