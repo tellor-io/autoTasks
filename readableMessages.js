@@ -21,7 +21,8 @@ exports.handler = async function (payload) {
       let timestamp = evt.timestamp; 
       let queryId = evt.matchReasons[0].args[0];
       let queryData = evt.matchReasons[0].args[3];
-      let value = (Math.round((parseInt(evt.matchReasons[0].args[1], 16) / 1e18) * 100 ) / 100).toFixed(2); // submitted value
+      let valueHex = evt.matchReasons[0].args[1];
+      let value = (Math.round((parseInt(valueHex, 16) / 1e18) * 100 ) / 100).toFixed(2);
       
       let hexString = queryData;
       hexString = hexString.replace(/04/g, ''); 
@@ -58,8 +59,10 @@ exports.handler = async function (payload) {
         label = 'Mimicry NFT Index';
       } else if (queryId === mimMashupSandId) {
         label = 'Mimicry NFT Mashup (Sand)';
+        value = (Math.round((parseInt(valueHex, 16)) * 100 ) / 100).toFixed(2);
       } else if (queryId === mimMashupSandId) {
         label = 'Mimicry NFT Mashup (Ape)';
+        value = (Math.round((parseInt(valueHex, 16)) * 100 ) / 100).toFixed(2);
       } else if (isRNG === true) {
         label = 'Tellor RNG';
       } else if (isEvmCall === true) {
