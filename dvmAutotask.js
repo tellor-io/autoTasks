@@ -132,8 +132,8 @@ const axios = require('axios');
             value: value,
             percentDiff: percentDiff,
             timestamp: timestamp,
-      		},
-    	});
+          },
+      });
     }
   }
   return { matches };
