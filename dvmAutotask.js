@@ -128,10 +128,10 @@ const axios = require('axios');
           hash: evt.hash, // needs to be here to connect with sentinel
       		metadata: {
             label: label,
-        		price: price,
+            price: price,
             value: value,
             percentDiff: percentDiff,
-        		timestamp: timestamp,
+            timestamp: timestamp,
       		},
     	});
     }
