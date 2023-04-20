@@ -126,7 +126,7 @@ const axios = require('axios');
     if (price > 0 && diff >= tolerance) {
     	matches.push({
           hash: evt.hash, // needs to be here to connect with sentinel
-      		metadata: {
+          metadata: {
             label: label,
             price: price,
             value: value,
