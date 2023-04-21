@@ -60,7 +60,7 @@ exports.handler = async function (payload) {
       } else if (queryId === mimMashupSandId) {
         label = 'Mimicry NFT Mashup (Sand)';
         value = (Math.round((parseInt(valueHex, 16)) * 100 ) / 100).toFixed(2);
-      } else if (queryId === mimMashupSandId) {
+      } else if (queryId === mimMashupApeId) {
         label = 'Mimicry NFT Mashup (Ape)';
         value = (Math.round((parseInt(valueHex, 16)) * 100 ) / 100).toFixed(2);
       } else if (isRNG === true) {
