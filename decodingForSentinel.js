@@ -46,7 +46,7 @@ exports.handler = async function (payload) {
   
     // metadata 
     matches.push({
-      hash: evt.hash,
+      hash: evt.hash, // needs to stay to link with sentinel
       metadata: {
         label: label, 
         timestamp: timestamp,
