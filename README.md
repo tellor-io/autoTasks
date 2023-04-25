@@ -13,7 +13,7 @@ All ```queryData``` will get decoded before being pushed, but a ```label``` can 
      const newId = '0x...';
   ```
   
-  2. add a new else if statement to create the matching label 
+  2. add a new if statement to create the matching label 
   
   ```javascript
      else if (queryId === newId) {
