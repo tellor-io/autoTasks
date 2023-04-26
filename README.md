@@ -16,7 +16,7 @@ function submitValue(
     )
 ```
 Since the ```queryId``` is the first argument, it can be accessed using ``` const queryId = evt.matchReasons[0].args[0]; ```
-``` value ``` is accessed using ``` const value = evt.matchReasons[0].args[1]; ```
+``` value ``` is accessed using ``` const value = evt.matchReasons[0].args[1]; ```.
 
 ### Customizing labels/values in autotask.js
 All ```queryData``` will get decoded before being pushed, but a ```label``` or different ```value``` calculation can be hardcoded for any ```queryId```. 
@@ -35,7 +35,7 @@ All ```queryData``` will get decoded before being pushed, but a ```label``` or d
      value = ... ;
      }
   ```
-
+https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages
 
 ### decodingForSentinelTemplate.md
 
