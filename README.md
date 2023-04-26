@@ -1,9 +1,22 @@
-# autoTasks 
+# AutoTasks 
 
 ## Overview 
-This project makes OpenZeppelin defender sentinels send more concise and readable messages through an autotask. 
+This project uses OpenZeppelin autotasks and sentinels to send a message everytime someone calls the ```submitValue``` function on the TellorFlex contract. 
 
-## Create a new label in autotask.js
+
+### Accessing function arguments in an Autotask
+
+```decodingForSentinel.js``` decodes the parameters from ```submitValue```. 
+```    
+function submitValue(
+        bytes32 _queryId,
+        bytes calldata _value,
+        uint256 _nonce,
+        bytes calldata _queryData
+    )
+```
+
+### Customizing labels/values in autotask.js
 All ```queryData``` will get decoded before being pushed, but a ```label``` can be hardcoded for any ```queryId```. 
   
   
@@ -20,3 +33,14 @@ All ```queryData``` will get decoded before being pushed, but a ```label``` can 
      label = 'new / USD';
      }
   ```
+
+
+
+### decodingForSentinelTemplate.md
+
+## dvmAutotask.js
+
+### dvmAutotaskTemplate.md
+
+
+
