@@ -16,21 +16,18 @@ exports.handler = async function (payload) {
 
     let type = abiUtils.decodeParameter('string', queryData);
     let makeHex = "0x";
+    let padding = "0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000"
     let isSpotPrice = queryData.includes('0953706f745072696365');
-
-    let removePrefix = queryData.substr(2);
-    let arrayBy64 = removePrefix.match(/(.{1,64})/g);   // make 64 character chunks from querydata
-    arrayBy64.forEach((element, index) => {
-  		arrayBy64[index] = Web3.utils.hexToAscii(makeHex.concat(element));  // convert each array entry from hex to ascii
-	  });
-
-    let asset, currency, label;
+    let asset, currency, label, splitByC, splitBy3;
+	  
     if (isSpotPrice === true) {
-      asset = arrayBy64[8];
-      currency = arrayBy64[10];
+      splitByC = queryData.split("0c0");
+      splitBy3 = splitByC[1].split("000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+      asset = abiUtils.decodeParameter('string', makeHex.concat(splitByC[1]));
+      currency = abiUtils.decodeParameter('string', padding.concat(splitBy3[1]));;
       label = asset.concat(" / ", currency);
     } else {
-      label = type; 
+      label = type;
     }
 
     const mimMashupSandId = '0x0c70e0b36b9849038027617c0e2ef87ac8c3f0e68168faf5186e0981b6c5eb47';
@@ -55,7 +52,6 @@ exports.handler = async function (payload) {
         queryData: queryData,
         asset: asset,
         currency: currency,
-        array: arrayBy64,
       },
     });
   }
