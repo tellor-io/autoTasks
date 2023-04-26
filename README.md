@@ -16,9 +16,9 @@ function submitValue(
     )
 ```
 Since the ```queryId``` is the first argument, it can be accessed in the autotask using ``` const queryId = evt.matchReasons[0].args[0]; ```
-``` value ``` is accessed using ``` const value = evt.matchReasons[0].args[1]; ```.
+``` value ``` is accessed using ``` const value = evt.matchReasons[0].args[1]; ```. 
 
-### Customizing labels/values in autotask.js
+### Customizing labels/values in autotasks
 All ```queryData``` will get decoded before being pushed, but a ```label``` or different ```value``` calculation can be hardcoded for any ```queryId```. 
   
   1. store the query ID 
@@ -27,7 +27,7 @@ All ```queryData``` will get decoded before being pushed, but a ```label``` or d
      const newId = '0x...';
   ```
   
-  2. add a new if statement to create the correpsonding label or value calculation.
+  2. add a new if statement to create the corresponding label or value calculation.
   
   ```javascript
      if (queryId === newId) {
@@ -35,13 +35,9 @@ All ```queryData``` will get decoded before being pushed, but a ```label``` or d
      value = ... ;
      }
   ```
-https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages
-
-### decodingForSentinelTemplate.md
-
-## dvmAutotask.js
-
-### dvmAutotaskTemplate.md
 
 
+### Customizing Sentinel messages
+
+Within each sentinel, messages can be customized using limited markdown syntax.  (https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages)
 
