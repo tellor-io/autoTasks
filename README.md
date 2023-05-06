@@ -1,7 +1,7 @@
 # AutoTasks 
 
 ## Overview 
-This project uses OpenZeppelin autotasks and sentinels to send a message everytime someone calls the ```submitValue``` function on the TellorFlex contract. 
+This project uses OpenZeppelin autotasks and sentinels to mimic a price feed but on Discord. The sentinel sends a Discord message everytime someone calls the ```submitValue``` function on the TellorFlex contract, and the message data is defined by the autotask. 
 
 
 ### Accessing function arguments
