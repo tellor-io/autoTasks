@@ -16,8 +16,8 @@ function submitValue(
         bytes calldata _queryData
     )
 ```
-Since the ```queryId``` is the function's first argument, it can be accessed in the autotask using ``` const queryId = evt.matchReasons[0].args[0];. ```
-``` value ``` is accessed using ``` const value = evt.matchReasons[0].args[1]; ```. 
+Since the ```queryId``` is the function's first argument, it can be accessed using ``` evt.matchReasons[0].args[0];. ```
+Similarly, ``` value ``` is accessed using ``` evt.matchReasons[0].args[1]; ```, and so on for each of the function in question's arguments.
 
 ### Customizing labels/values in autotasks
 All ```queryData``` will get decoded before being pushed, but a ```label``` or different ```value``` calculation can be hardcoded for any ```queryId```. 
