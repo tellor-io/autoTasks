@@ -4,7 +4,7 @@
 This project uses OpenZeppelin autotasks and sentinels to send a message everytime someone calls the ```submitValue``` function on the TellorFlex contract. 
 
 
-### Accessing function arguments in an autotask
+### Accessing function arguments
 
 An autotask can be used to decode the parameters from a function that is being watched by a sentinel.
 Both ```decodingForSentinel.js``` and ```dvmAutotask.js``` decode the data sent through the ```submitValue``` function. 
