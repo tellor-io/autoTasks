@@ -1,8 +1,17 @@
 # AutoTasks 
 
 ## Overview 
-This project uses OpenZeppelin autotasks and sentinels to mimic a price feed but on Discord. The sentinel sends a Discord message everytime someone calls the ```submitValue``` function on the TellorFlex contract, and the message data is defined by the autotask. 
+This repository uses OpenZeppelin autotasks and sentinels to create a data feed on Discord.
 
+## Sentinels
+
+Sentinels are set up per network to send a discord message everytime the ```submitValue``` function is called on the TellorFlex contract. 
+
+The markdown template files show what the sentinel is pushing to discord. Sentinel notifications can be customized using limited markdown syntax, as shown in the [OpenZeppelin docs](https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages).
+
+## Autotasks
+
+Metadata for each submitValue call can be defined within an autotask and then pushed in a message by a sentinel. 
 
 ### Accessing function arguments
 
@@ -20,7 +29,7 @@ Since the ```queryId``` is the function's first argument, it can be accessed usi
 Similarly, ``` value ``` is accessed using ``` evt.matchReasons[0].args[1]; ```, and so on for each of the function in question's arguments.
 
 ### Decoding
-Query Data is decoded using the decodeParameter function from the web3-eth-abi package. It reads the type, but not the data afterwards. Looking for better solutions still.
+The queryData and value is decoded using the decodeParameter function from the web3-eth-abi package. 
 
 
 ### Customizing labels/values in autotasks
@@ -41,11 +50,5 @@ All ```queryData``` will get decoded before being pushed, but a ```label``` or d
      }
   ```
   
-# Sentinels
 
-A sentinel needs built to watch the TellorFlex contract on each network. Each sentinel can be assigned to send a discord message by connecting it to a discord webhook. 
-
-### Customizing Sentinel messages
-
-Within each sentinel, notifications can be customized using limited markdown syntax.  (https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages)
 
