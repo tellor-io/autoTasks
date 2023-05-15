@@ -8,28 +8,45 @@ exports.handler = async function (payload) {
   const events = conditionRequest.events;
   for (const evt of events) {
     
+    // function arguments and transaction timestamp
     const timestamp = evt.timestamp; 
     const queryId = evt.matchReasons[0].args[0];
     const queryData = evt.matchReasons[0].args[3];
     const valueHex = evt.matchReasons[0].args[1];
-    let value = (Math.round((parseInt(valueHex, 16) / 1e18) * 100 ) / 100).toFixed(2);
-
+	  
+    // adjust value decimal place	  
+    let decodedValue = abiUtils.decodeParameter('uint256', valueHex);
+    let value = (Math.round((decodedValue / 1e18) * 100 ) / 100).toFixed(2);
+    // read the querydata type
     let type = abiUtils.decodeParameter('string', queryData);
+	  
     let makeHex = "0x";
-    let padding = "0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000"
     let isSpotPrice = queryData.includes('0953706f745072696365');
-    let asset, currency, label, splitByC, splitBy3;
+    let label, splitByC, decodedPair, hexPair;
 	  
     if (isSpotPrice === true) {
-      splitByC = queryData.split("0c0");
-      splitBy3 = splitByC[1].split("000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-      asset = abiUtils.decodeParameter('string', makeHex.concat(splitByC[1]));
-      currency = abiUtils.decodeParameter('string', padding.concat(splitBy3[1]));;
-      label = asset.concat(" / ", currency);
+      // isolate spot price type parameters in the query data string 
+      splitByC = queryData.split("0c0"); 
+      hexPair = makeHex.concat(splitByC[1]);
+      // decode asset / currency names    
+      decodedPair = abiUtils.decodeParameters([
+        {
+    	type: 'string',
+    	name: 'asset',
+	},
+        {
+    	type: 'string',
+    	name: 'currency',
+	}
+      ], hexPair);
+      // create label that looks like data feed    
+      label = decodedPair["asset"].concat(" / ", decodedPair["currency"]);
     } else {
       label = type;
     }
-
+	  
+	  
+    // hardcoded label and value calculation for mimicry types
     const mimMashupSandId = '0x0c70e0b36b9849038027617c0e2ef87ac8c3f0e68168faf5186e0981b6c5eb47';
     const mimMashupApeId = '0x9026839f0ed5b30c73fd0a6046e3ade4e04c94c5e8c982089205109de74b0553';
     
@@ -48,10 +65,6 @@ exports.handler = async function (payload) {
         label: label, 
         timestamp: timestamp,
         value: value,
-        queryId: queryId,
-        queryData: queryData,
-        asset: asset,
-        currency: currency,
       },
     });
   }
