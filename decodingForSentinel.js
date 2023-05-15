@@ -43,8 +43,7 @@ exports.handler = async function (payload) {
       label = decodedPair["asset"].concat(" / ", decodedPair["currency"]);
     } else {
       label = type;
-    }
-	  
+    }	  
 	  
     // hardcoded label and value calculation for mimicry types
     const mimMashupSandId = '0x0c70e0b36b9849038027617c0e2ef87ac8c3f0e68168faf5186e0981b6c5eb47';
