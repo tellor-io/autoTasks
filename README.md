@@ -5,18 +5,15 @@ This repository uses OpenZeppelin autotasks and sentinels to create a data feed 
 
 ## Sentinels
 
-Sentinels are set up per network to send a discord message everytime the ```submitValue``` function is called on the TellorFlex contract. 
+Through [Open Zeppelin Defender](https://defender.openzeppelin.com/#/sentinel), create a sentinel that watches the ```submitValue``` function on the TellorFlex contract. Connect each sentinel to a discord server through a webhook. 
 
-The markdown template files show what the sentinel is pushing to discord. Sentinel notifications can be customized using limited markdown syntax, as shown in the [OpenZeppelin docs](https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages).
+Sentinel notifications can be customized using limited markdown syntax, as shown in the [OpenZeppelin docs](https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages). The metadata used in ```decodingForSentinelTemplate.md ``` and ```dvmTemplate.md``` is defined in their respective autotasks.
 
 ## Autotasks
 
-Metadata for each submitValue call can be defined within an autotask and then pushed in a message by a sentinel. 
-
 ### Accessing function arguments
 
-An autotask can be used to decode the parameters from a function that is being watched by a sentinel.
-Both ```decodingForSentinel.js``` and ```dvmAutotask.js``` decode the data sent through the ```submitValue``` function. 
+Both ```decodingForSentinel.js``` and ```dvmAutotask.js``` decode the data sent through the ```submitValue``` function, which has the following parameters:
 ```    
 function submitValue(
         bytes32 _queryId,
@@ -25,15 +22,17 @@ function submitValue(
         bytes calldata _queryData
     )
 ```
-Since the ```queryId``` is the function's first argument, it can be accessed using ``` evt.matchReasons[0].args[0];. ```
-Similarly, ``` value ``` is accessed using ``` evt.matchReasons[0].args[1]; ```, and so on for each of the function in question's arguments.
+Since the ```_queryId``` is the function's first argument, it can be accessed using ``` evt.matchReasons[0].args[0]; ```.
+Similarly, ``` _value ``` is accessed using ``` evt.matchReasons[0].args[1]; ```, and so on. These return an abiEncoded hex string.
 
 ### Decoding
-The queryData and value is decoded using the decodeParameter function from the web3-eth-abi package. 
+The function arguments are decoded using [decodeParameter](https://docs.web3js.org/api/web3-eth-abi/function/decodeParameter) and [decodeParameters](https://docs.web3js.org/api/web3-eth-abi/function/decodeParameters) from the web3-eth-abi package. 
+
+Store the decoded parameters in the autotask metadata, and then push it into the sentinel message using `{{ metadata.variableName }}` in the sentinel notification template.
 
 
 ### Customizing labels/values in autotasks
-All ```queryData``` will get decoded before being pushed, but a ```label``` or different ```value``` calculation can be hardcoded for any ```queryId```. 
+A special ```label``` or  ```value``` calculation can be hardcoded for any ```queryId```. 
   
   1. store the query ID 
   
