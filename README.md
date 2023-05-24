@@ -7,9 +7,9 @@ This repository uses [OpenZeppelin Defender](https://defender.openzeppelin.com) 
 
 ## Sentinels
 
-Through [Open Zeppelin Defender](https://defender.openzeppelin.com/#/sentinel), create a sentinel that watches the ```submitValue``` function on the TellorFlex contract. Connect each sentinel to a discord server through a webhook. 
+These scipts utilize a sentinel that watches the ```submitValue``` function on the TellorFlex contract. Each sentinel is connected to a discord webhook. 
 
-Sentinel notifications can be customized using limited markdown syntax, as shown in the [OpenZeppelin docs](https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages). The metadata used in ```decodingForSentinelTemplate.md ``` and ```dvmTemplate.md``` is defined in their respective autotasks.
+Sentinel notifications can be customized using limited markdown syntax, as shown in the [OpenZeppelin docs](https://docs.openzeppelin.com/defender/sentinel#customizing-notification-messages). Metadata is created by each autotask, and pushed to discord through each sentinel.
 
 ## Autotasks
 
@@ -30,7 +30,7 @@ Similarly, ``` _value ``` is accessed using ``` evt.matchReasons[0].args[1]; ```
 ### Decoding
 The function arguments are decoded using [decodeParameter](https://docs.web3js.org/api/web3-eth-abi/function/decodeParameter) and [decodeParameters](https://docs.web3js.org/api/web3-eth-abi/function/decodeParameters) from the web3-eth-abi package. 
 
-Store the decoded parameters in the autotask metadata, and then push it into the sentinel message using `{{ metadata.variableName }}` in the sentinel notification template.
+Metadata in an autotask can be pushed into a sentinel message using `{{ metadata.variableName }}` in the sentinel notification template.
 
 
 ### Customizing labels/values in autotasks
