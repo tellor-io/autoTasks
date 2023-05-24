@@ -1,9 +1,9 @@
 # AutoTasks 
 
 ## Overview 
-This repository uses OpenZeppelin autotasks and sentinels to create a mock data feed on Discord.
+This repository uses [OpenZeppelin Defender](https://defender.openzeppelin.com) autotasks and sentinels to create a mock data feed on Discord.
 
-[OpenZeppelin Defender](https://defender.openzeppelin.com)
+
 
 ## Sentinels
 
