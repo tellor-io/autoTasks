@@ -65,10 +65,9 @@ if (isSpotPrice === true) {
 13. Now that the autotask is created, connect it to the sentinel by going back into the sentinel menu and selcting edit conditions
 14. At the bottom of the page, under custom conditions, select your autotask and save changes
 15. In the sentinel settings, select edit notifications
-16. Select customize notification
-  - [Limited markdown syntax](https://docs.openzeppelin.com/defender/sentinel#example) can be used for formatting 
+16. Select customize notification - [limited markdown syntax](https://docs.openzeppelin.com/defender/sentinel#example) can be used for formatting 
   - metadata from the autotask can be read in the custom notification template
-  - if a timestamp is stored in the metadata 
+  - if a timestamp is stored in the metadata as
   ```javascript
   metadata: {
       timestamp: timestamp,
