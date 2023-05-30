@@ -14,7 +14,7 @@ The sentinels can only push the encoded query data and value from on-chain. To m
 
 1. Create a new sentinel from the sentinel dashboard.
 2. Select "Contract Sentinel" and choose the desired network.
-  - Monitoring multiple networks can be achieved by setting up a separate sentinel for each network.
+   - Monitoring multiple networks can be achieved by setting up a separate sentinel for each network.
 3. Paste in the TellorTlex contract address: `0xD9157453E2668B2fc45b7A803D3FEF3642430cC0`.
 4. If the contract ABI doesn't automatically load, paste it in manually.
 5. Continue to the next page.
