@@ -7,14 +7,13 @@ This repository uses [OpenZeppelin Defender](https://defender.openzeppelin.com) 
 
 Sentinels are used to watch for the `submitValue` function to be called on all [supported networks](https://docs.openzeppelin.com/defender/#networks). Every time the function is called, a Discord message is sent that includes the query type, the submitted value for that query, the transaction timestamp, and a block explorer link.
 
-The sentinels can only push the encoded query data and value from on-chain. To make the sentinel messages readable, an autotask is run every time the sentinel is triggered. Autotasks are JavaScript snippets that can check conditions and gather information from external APIs. Metadata can be created in the autotask and pushed into the sentinel messages.
+The sentinels themselves can only push the encoded on-chain data. To make the sentinel messages readable, an autotask is run alongside the sentinels. Autotasks are JavaScript snippets that can check conditions and gather information from external APIs. Metadata can be created in the autotask and pushed into the sentinel messages.
 
 
 ## How to set up defenders for a personal price feed
 
 1. Create a new sentinel from the sentinel dashboard.
-2. Select "Contract Sentinel" and choose the desired network.
-   - Monitoring multiple networks can be achieved by setting up a separate sentinel for each network.
+2. Select "Contract Sentinel" and choose the desired network. Monitoring multiple networks can be achieved by setting up a separate sentinel for each network.
 3. Paste in the TellorTlex contract address: `0xD9157453E2668B2fc45b7A803D3FEF3642430cC0`.
 4. If the contract ABI doesn't automatically load, paste it in manually.
 5. Continue to the next page.
@@ -28,7 +27,7 @@ The sentinels can only push the encoded query data and value from on-chain. To m
 
 
 
-- Parameters can be accessed as follows:
+- Common parameters:
 
 ```javascript
 const timestamp = evt.timestamp;
@@ -66,14 +65,13 @@ if (isSpotPrice === true) {
 14. At the bottom of the page, under custom conditions, select your autotask and save changes
 15. In the sentinel settings, select edit notifications
 16. Select customize notification - [limited markdown syntax](https://docs.openzeppelin.com/defender/sentinel#example) can be used for formatting 
-  - metadata from the autotask can be read in the custom notification template
-  - if a timestamp is stored in the metadata as
+  - Metadata from the autotask can be read in the custom notification template
   ```javascript
   metadata: {
       timestamp: timestamp,
   },
   ```
-  - the timestamp can be read by the sentinel with {{ metadata.timestamp }}
+  - the timestamp can be pushed to the sentinel notifications with {{ metadata.timestamp }}
 
 
 
