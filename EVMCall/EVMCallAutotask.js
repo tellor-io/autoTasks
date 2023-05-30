@@ -149,19 +149,20 @@ exports.handler = async function (payload) {
                     isSuccess = true;
                 }
             }
-        }
-        // push notification if evmcall value doesnt match return
-        if (isSuccess === false) {
-            // metadata 
-            matches.push({
-                hash: evt.hash,
-                metadata: {
-                    timestamp: timestamp,
-                    isSuccess: isSuccess,
-                    result: result,
-                    value: value,
-                },
-            });
+
+            // push notification if evmcall value doesnt match return
+            if (isSuccess === false) {
+                // metadata 
+                matches.push({
+                    hash: evt.hash,
+                    metadata: {
+                        timestamp: timestamp,
+                        isSuccess: isSuccess,
+                        result: result,
+                        value: value,
+                    },
+                });
+            }
         }
     }
     return { matches };
