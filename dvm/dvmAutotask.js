@@ -25,6 +25,7 @@ exports.handler = async function (payload) {
     let value = (Math.round((parseInt(valueHex, 16) / 1e18) * 100) / 100).toFixed(2);
     let type = abiUtils.decodeParameter('string', queryData);
     let isSpotPrice = queryData.includes('0953706f745072696365');
+    let decodedQData, decodedParams, label;
 
     if (isSpotPrice === true) {
       // seperate type from encoded parameters
@@ -131,15 +132,15 @@ exports.handler = async function (payload) {
     }
 
     let tolerance = 0.2;
-    let diff = Math.abs((value - price) / price);
+    let diff = Math.abs((value - cgPrice) / cgPrice);
     let percentDiff = Math.round(diff * 100);
 
-    if (price > 0 && diff >= tolerance) {
+    if (cgPrice > 0 && diff >= tolerance) {
       matches.push({
         hash: evt.hash, // needs to be here to connect with sentinel
         metadata: {
           label: label,
-          price: price,
+          price: cgPrice,
           value: value,
           percentDiff: percentDiff,
           timestamp: timestamp,
