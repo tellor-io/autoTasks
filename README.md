@@ -34,7 +34,7 @@ const timestamp = evt.timestamp;
 const queryId = evt.matchReasons[0].args[0];
 const valueHex = evt.matchReasons[0].args[1];
 const queryData = evt.matchReasons[0].args[3];
-// parameters can be decoded using `web3.eth.abi.decodeParam(s)`
+// parameters can be decoded using web3.eth.abi.decodeParam(s)
 ```
 
 
