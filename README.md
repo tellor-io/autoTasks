@@ -5,7 +5,7 @@ This repository uses [OpenZeppelin Defender](https://defender.openzeppelin.com) 
 
 ## What it does
 
-Sentinels are used to watch for the `submitValue` function to be called on all [supported networks](https://docs.openzeppelin.com/defender/#networks). Every time the function is called, a Discord message is sent that includes the query type, the submitted value for that query, the transaction timestamp, and a block explorer link.
+Sentinels watch for the `submitValue` function on the TellorFlex contract to be called on all [supported networks](https://docs.openzeppelin.com/defender/#networks). Every time the function is called, a Discord message is sent that includes the query type, the submitted value for that query, the transaction timestamp, and a block explorer link.
 
 The sentinels themselves can only push the encoded on-chain data. To make the sentinel messages readable, an autotask is run alongside the sentinels. Autotasks are JavaScript snippets that can check conditions and gather information from external APIs. Metadata can be created in the autotask and pushed into the sentinel messages.
 
