@@ -21,6 +21,22 @@ exports.handler = async function (payload) {
         let isEVMCall = queryData.includes('0745564d43616c6c');
         let isRNG = queryData.includes('0954656c6c6f72524e47');
         let decodedQData, decodedParams, label;
+        
+        const nf = new Intl.NumberFormat("en-US", {
+  			style: "currency",
+  			currency: "USD",
+  			maximumFractionDigits: 2,
+		});
+        const nfMeme = new Intl.NumberFormat("en-US", {
+  			style: "currency",
+  			currency: "USD",
+  			maximumFractionDigits: 6,
+		});
+        const nfJPY = new Intl.NumberFormat("en-US", {
+  			style: "currency",
+  			currency: "JPY",
+  			maximumFractionDigits: 2,
+		});
 
         if (isSpotPrice === true) {
             // seperate type from encoded parameters
