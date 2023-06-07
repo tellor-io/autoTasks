@@ -62,8 +62,13 @@ exports.handler = async function (payload) {
                     name: 'currency',
                 }
             ], decodedQData["parameters"]);
-
-            label = decodedParams["asset"].concat(" / ", decodedParams["currency"]);
+          
+            if (decodedParams["currency"] === 'jpy') {
+              value = nfJPY.format(value);
+            } else {
+              value = nf.format(decodedValue);
+            }
+            label = (decodedParams["asset"].concat(" / ", decodedParams["currency"])).toUpperCase();
         } else {
             label = type;
         }
@@ -101,7 +106,7 @@ exports.handler = async function (payload) {
         }
 
         if (isRNG === true) {
-            value = (value.slice(0, 6)).concat('...');
+            value = ((value / 1e40).slice(0, 6)).concat('...');
         }
 
         // hardcoded label and value calculation for mimicry
