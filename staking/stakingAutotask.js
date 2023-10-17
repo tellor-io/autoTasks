@@ -13,21 +13,26 @@ exports.handler = async function (payload) {
             event = "Stake Deposited!"
             address = evt.matchReasons[0].args[0];
             amount = evt.matchReasons[0].args[1];
+          amount = amount / 1e18;
         } else if (isStakeWithdrawRequested === true) {
             event = "Stake withdraw requested!"
             address = evt.matchReasons[0].args[0];
             amount = evt.matchReasons[0].args[1];
+          amount = amount / 1e18;
         } else if (isStakeWithdrawn === true) {
             event = "Stake withdrawn!"
             address = evt.matchReasons[0].args[0];
+          amount = "n/a";
         }
 
+        // metadata can be any JSON-marshalable object (or undefined)
         matches.push({
             hash: evt.hash,
             metadata: {
                 address: address,
                 event: event,
                 amount: amount,
+              matchReasons: evt.matchReasons[0],
             },
         });
     }
