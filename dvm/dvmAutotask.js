@@ -139,14 +139,14 @@ exports.handler = async function (payload) {
       label = 'STETH / USD';
       await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=staked-ether&vs_currencies=usd')
         .then(response => {
-          cgPrice = response.data.staked - ether.usd;
+          cgPrice = response.data.staked-ether.usd;
         })
         .catch(error => console.error(error));
     } else if (queryId === wstethUSD) {
       label = 'WSTETH / USD';
       await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=wrapped-steth&vs_currencies=usd')
         .then(response => {
-          cgPrice = response.data.wrapped - steth.usd;
+          cgPrice = response.data.wrapped-steth.usd;
         })
         .catch(error => console.error(error));
     } else if (queryId === swethUSD) {
@@ -160,7 +160,7 @@ exports.handler = async function (payload) {
       label = 'CBETH / USD';
       await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=coinbase-wrapped-staked-eth&vs_currencies=usd')
         .then(response => {
-          cgPrice = response.data.coinbase - wrapped - staked - eth.usd;
+          cgPrice = response.data.coinbase-wrapped-staked-eth.usd;
         })
         .catch(error => console.error(error));
     }
