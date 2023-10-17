@@ -166,8 +166,8 @@ exports.handler = async function (payload) {
     }
 
     let tolerance = 0.2;
-    let diff = Math.abs((value - cgPrice) / cgPrice);
-    let percentDiff = Math.round(diff * 100);
+    let diff = (value - cgPrice) / cgPrice;
+    let percentDiff = (diff * 100);
 
     if (cgPrice > 0 && diff >= tolerance) {
       matches.push({
