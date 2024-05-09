@@ -1,5 +1,5 @@
 const axios = require('axios');
-var abiUtils = require("web3-eth-abi");
+var abiUtils = require('web3');
 
 exports.handler = async function (payload) {
   const conditionRequest = payload.request.body;
@@ -29,18 +29,18 @@ exports.handler = async function (payload) {
     const queryData = evt.matchReasons[0].args[3];
     const valueHex = evt.matchReasons[0].args[1];
     let value = (Math.round((parseInt(valueHex, 16) / 1e18) * 100) / 100).toFixed(2);
-    let type = abiUtils.decodeParameter('string', queryData);
+    let type = web3.eth.abi.decodeParameter('string', queryData);
     let isSpotPrice = queryData.includes('0953706f745072696365');
     let decodedQData, decodedParams, label;
 
     if (isSpotPrice === true) {
       // seperate type from encoded parameters
-      decodedQData = abiUtils.decodeParameters([
+      decodedQData = web3.eth.abi.decodeParameters([
         { type: 'string', name: 'type', },
         { type: 'bytes', name: 'parameters', }
       ], queryData);
       // decode query parameters
-      decodedParams = abiUtils.decodeParameters([
+      decodedParams = web3.eth.abi.decodeParameters([
         { type: 'string', name: 'asset', },
         { type: 'string', name: 'currency', }
       ], decodedQData["parameters"]);
@@ -165,7 +165,7 @@ exports.handler = async function (payload) {
         .catch(error => console.error(error));
     }
 
-    let tolerance = 0.2;
+    let tolerance = 0.1;
     let diff = (value - cgPrice) / cgPrice;
     let percentDiff = (diff * 100);
 
