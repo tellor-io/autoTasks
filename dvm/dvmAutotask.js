@@ -1,5 +1,5 @@
 const axios = require('axios');
-var abiUtils = require('web3');
+const Web3 = require('web3');
 
 exports.handler = async function (payload) {
   const conditionRequest = payload.request.body;
@@ -24,157 +24,101 @@ exports.handler = async function (payload) {
     const swethUSD = '0xfd47fa335a8c4886222ebae89a8de8d4a0187eb06c4429d3c0a7932332d2430d';
     const cbethUSD = '0xbb5e0a51ab0e06354439f377e326ca71ec8149249d163f75f543fcdc25818e76';
 
+    let web3 = new Web3();
+
     const timestamp = evt.timestamp;
     const queryId = evt.matchReasons[0].args[0];
     const queryData = evt.matchReasons[0].args[3];
     const valueHex = evt.matchReasons[0].args[1];
-    let value = (Math.round((parseInt(valueHex, 16) / 1e18) * 100) / 100).toFixed(2);
+    let value = (Math.round((parseInt(valueHex, 16) / 1e18) * 100) / 100);
     let type = web3.eth.abi.decodeParameter('string', queryData);
-    let isSpotPrice = queryData.includes('0953706f745072696365');
-    let decodedQData, decodedParams, label;
-
-    if (isSpotPrice === true) {
-      // seperate type from encoded parameters
-      decodedQData = web3.eth.abi.decodeParameters([
-        { type: 'string', name: 'type', },
-        { type: 'bytes', name: 'parameters', }
-      ], queryData);
-      // decode query parameters
-      decodedParams = web3.eth.abi.decodeParameters([
-        { type: 'string', name: 'asset', },
-        { type: 'string', name: 'currency', }
-      ], decodedQData["parameters"]);
-      label = decodedParams["asset"].concat(" / ", decodedParams["currency"]);
-    } else {
-      label = type;
-    }
+    let isSpotPrice = type.includes('SpotPrice');
+    let decodedQData, decodedParams;
+    let label = "unknown";
 
     let cgPrice;
 
-    if (queryId === btcUSD) {
-      label = 'BTC / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.bitcoin.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === ethUSD) {
-      label = 'ETH / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.ethereum.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === trbUSD) {
-      label = 'TRB / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=tellor&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.tellor.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === ltcUSD) {
-      label = 'LTC / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.litecoin.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === opUSD) {
-      label = 'OP / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=optimism&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.optimism.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === bchUSD) {
-      label = 'BCH / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data["bitcoin-cash"]["usd"];
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === maticUSD) {
-      label = 'MATIC / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data["matic-network"]["usd"];
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === solUSD) {
-      label = 'SOL / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.solana.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === dotUSD) {
-      label = 'DOT / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=polkadot&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.polkadot.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === filUSD) {
-      label = 'FIL / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.filecoin.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === brlUSD) {
-      label = 'BRL / USD';
-      await axios.get('https://v6.exchangerate-api.com/v6/f3f113229ceb2af69fded16d/latest/BRL')
-        .then(response => {
-          cgPrice = response.data.conversion_rates.USD;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === cnyUSD) {
-      label = 'CNY / USD';
-      await axios.get('https://v6.exchangerate-api.com/v6/f3f113229ceb2af69fded16d/latest/CNY')
-        .then(response => {
-          cgPrice = response.data.conversion_rates.USD;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === stethUSD) {
-      label = 'STETH / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=staked-ether&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data["staked-ether"]["usd"];
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === wstethUSD) {
-      label = 'WSTETH / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=wrapped-steth&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data["wrapped-steth"]["usd"];
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === swethUSD) {
-      label = 'SWETH / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=sweth&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data.sweth.usd;
-        })
-        .catch(error => console.error(error));
-    } else if (queryId === cbethUSD) {
-      label = 'CBETH / USD';
-      await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=coinbase-wrapped-staked-eth&vs_currencies=usd')
-        .then(response => {
-          cgPrice = response.data["coinbase-wrapped-staked-eth"]["usd"];
-        })
-        .catch(error => console.error(error));
+    try {
+      if (queryId === btcUSD) {
+        label = 'BTC / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        cgPrice = response.data.bitcoin.usd;
+      } else if (queryId === ethUSD) {
+        label = 'ETH / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        cgPrice = response.data.ethereum.usd;
+      } else if (queryId === trbUSD) {
+        label = 'TRB / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=tellor&vs_currencies=usd');
+        cgPrice = response.data.tellor.usd;
+      } else if (queryId === ltcUSD) {
+        label = 'LTC / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd');
+        cgPrice = response.data.litecoin.usd;
+      } else if (queryId === opUSD) {
+        label = 'OP / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=optimism&vs_currencies=usd');
+        cgPrice = response.data.optimism.usd;
+      } else if (queryId === bchUSD) {
+        label = 'BCH / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin-cash&vs_currencies=usd');
+        cgPrice = response.data["bitcoin-cash"]["usd"];
+      } else if (queryId === maticUSD) {
+        label = 'MATIC / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd');
+        cgPrice = response.data["matic-network"]["usd"];
+      } else if (queryId === solUSD) {
+        label = 'SOL / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+        cgPrice = response.data.solana.usd;
+      } else if (queryId === dotUSD) {
+        label = 'DOT / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=polkadot&vs_currencies=usd');
+        cgPrice = response.data.polkadot.usd;
+      } else if (queryId === filUSD) {
+        label = 'FIL / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=filecoin&vs_currencies=usd');
+        cgPrice = response.data.filecoin.usd;
+      } else if (queryId === brlUSD) {
+        label = 'BRL / USD';
+        const response = await axios.get('https://v6.exchangerate-api.com/v6/f3f113229ceb2af69fded16d/latest/BRL');
+        cgPrice = response.data.conversion_rates.USD;
+      } else if (queryId === cnyUSD) {
+        label = 'CNY / USD';
+        const response = await axios.get('https://v6.exchangerate-api.com/v6/f3f113229ceb2af69fded16d/latest/CNY');
+        cgPrice = response.data.conversion_rates.USD;
+      } else if (queryId === stethUSD) {
+        label = 'STETH / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=staked-ether&vs_currencies=usd');
+        cgPrice = response.data["staked-ether"]["usd"];
+      } else if (queryId === wstethUSD) {
+        label = 'WSTETH / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=wrapped-steth&vs_currencies=usd');
+        cgPrice = response.data["wrapped-steth"]["usd"];
+      } else if (queryId === swethUSD) {
+        label = 'SWETH / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=sweth&vs_currencies=usd');
+        cgPrice = response.data.sweth.usd;
+      } else if (queryId === cbethUSD) {
+        label = 'CBETH / USD';
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=coinbase-wrapped-staked-eth&vs_currencies=usd');
+        cgPrice = response.data["coinbase-wrapped-staked-eth"]["usd"];
+      }
+    } catch (error) {
+      console.error(`Error fetching price for ${label}:`, error);
+      continue; // Skip to the next event if an error occurs
     }
 
     let tolerance = 0.1;
-    let diff = (value - cgPrice) / cgPrice;
-    let percentDiff = (diff * 100);
+    let diff = Math.abs((value - cgPrice) / cgPrice);
+    let percentDiff = (diff * 100).toFixed(2);
 
     if (cgPrice > 0 && diff >= tolerance) {
       matches.push({
         hash: evt.hash, // needs to be here to connect with sentinel
         metadata: {
           label: label,
-          price: cgPrice,
+          cgPrice: cgPrice,
           value: value,
           percentDiff: percentDiff,
           timestamp: timestamp,

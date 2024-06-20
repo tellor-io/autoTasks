@@ -1,0 +1,1 @@
+{{ metadata.label }}, {{ metadata.value }}, {{ metadata.cgPrice }}, {{ metadata.cmcPrice }}, {{ metadata.coinCapPrice }}, {{ metadata.avg }}

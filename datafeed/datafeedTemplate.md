@@ -1,0 +1,1 @@
+> `{{ metadata.label}},  {{ metadata.value }}, Padded: {{ metadata.padded }}`   [{{ sentinel.network }}]({{ transaction.link }})
