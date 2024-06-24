@@ -1,4 +1,6 @@
-** Potential Dispute! **
-> Reported: `{{ metadata.label }}, {{ metadata.value }},` {{ metadata.timestamp }}
+** Potential Dispute for {{ metadata.label }} on {{ sentinel.network }} ! **
 
-> Expected: `{{ metadata.label }}, {{ metadata.cgPrice }}` is {{ metadata.percentDiff }}% different
+> Reported: `{{ metadata.value }}`
+> Expected: `{{ metadata.cgPrice }}` is {{ metadata.percentDiff }}% different
+
+> Timestamp: [{{ metadata.timestamp }}]({{ transaction.link }})
